@@ -12,6 +12,7 @@ two_sum([2, 7, 11, 15], 9) -> (0, 1)
 
 def two_sum(nums: list, target: int) -> tuple:
     '''
+    Comment to mentor: 
     A bug in 4th test case. A test case has two possible 
     solutions. So, below solution should work, but it doesn't. 
 
@@ -42,7 +43,8 @@ is_isomorphic('egg', 'add') -> True
 
 def is_isomorphic(s: str, t: str) -> bool:
     '''
-    Test case 5 is incorrect. 
+    Comment to mentor: 
+    Test case 5 should evaluate to True, not False?
 
     '''
     d1, d2 = {}, {}
@@ -123,7 +125,9 @@ group_shifted(["abc", "bcd", "acef", "xyz", "az", "ba", "a", "z"]) -> [["abc","b
 
 def group_shifted(strings: list) -> list:
     '''
-    First test case is incorrect. 
+    Comment to mentor: 
+    Test case 1 is incorrect? 
+    ["xyz"] should be grouped with ["abc","bcd"] ? 
     
     '''
     res = defaultdict(list)

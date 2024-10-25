@@ -15,7 +15,7 @@ class TestFunctions(unittest.TestCase):
         self.assertEqual(hw_bonus.is_isomorphic('foo', 'bar'), False)
         self.assertEqual(hw_bonus.is_isomorphic('ab'*10**5, 'cd'*10**5), True)
         self.assertEqual(hw_bonus.is_isomorphic('aa'*10**5, 'ab'*10**5), False)
-        # self.assertEqual(hw_bonus.is_isomorphic('abcd', 'dcba'), False)
+        self.assertEqual(hw_bonus.is_isomorphic('abcd', 'dcba'), False)
 
     def test_is_alien_sorted(self):
         self.assertEqual(hw_bonus.is_alien_sorted(["hello","leetcode"], "hlabcdefgijkmnopqrstuvwxyz"), True)
@@ -32,8 +32,7 @@ class TestFunctions(unittest.TestCase):
         self.assertEqual(hw_bonus.length_of_longest_substring('abc'*10**5), 3)
 
     def test_group_shifted(self):
-        # self.assertEqual(hw_bonus.group_shifted(["abc", "bcd", "acef", "xyz", "az", "ba", "a", "z"]), [["abc","bcd"],["acef"],["xyz"],["az","ba"],["a","z"]])
-
+        self.assertEqual(hw_bonus.group_shifted(["abc", "bcd", "acef", "xyz", "az", "ba", "a", "z"]), [["abc","bcd"],["acef"],["xyz"],["az","ba"],["a","z"]])
         self.assertEqual(hw_bonus.group_shifted(["abc", "bcd", "acef"]), [["abc","bcd"],["acef"]])
         self.assertEqual(hw_bonus.group_shifted(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]), [["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]])
         self.assertEqual(hw_bonus.group_shifted(["abc"]*10**5), [["abc"]*10**5])
