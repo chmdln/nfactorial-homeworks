@@ -98,11 +98,6 @@ Example:
 list(fibonacci_gen(10)) -> [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
 """
 def fibonacci_gen(n: int) -> Generator[int, None, None]:
-    '''
-    One test case is wrong. Should be: 
-    self.assertEqual(list(hw.fibonacci_gen(1)), [0])
-    
-    '''
     prev1, prev2 = 0, 1 
     for i in range(n):
         yield prev1

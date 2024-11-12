@@ -120,7 +120,7 @@ class TestFunctions(unittest.TestCase):
         for _ in range(2, 2000):
             fibs.append(fibs[-1] + fibs[-2])
         self.assertEqual(list(hw.fibonacci_gen(2000)), fibs)
-        # self.assertEqual(list(hw.fibonacci_gen(1)), [0, 1])
+        self.assertEqual(list(hw.fibonacci_gen(1)), [0])
         fibs = [0, 1]
         for _ in range(2, 3000):
             fibs.append(fibs[-1] + fibs[-2])
