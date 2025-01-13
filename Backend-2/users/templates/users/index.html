@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Пользователи</title>
+  </head>
+  <body>
+    <!-- (сюда писать решение) -->
+    <table>
+    {% for user in users %}
+      <tr>
+        <td>
+          <a href=/users/{{user.id}}>{{user.first_name}} {{user.last_name}}</a>
+        </td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.username }}</td>
+      </tr>
+    {% endfor %}
+    </table>
+    <!-- (конец решения) -->
+  </body>
+</html>
+
+
+
+
+
