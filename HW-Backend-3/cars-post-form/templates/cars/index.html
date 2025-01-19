@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Дөңгелек.kz - Поиск</title>
+</head>
+
+<body>
+    <a href="/cars/new">Add a car</a>
+    <ol>
+        {% for car in cars %}
+        <li>Car name: {{ car.name }}</li>
+        {% endfor %}
+    </ol>
+</body>
+
+</html>

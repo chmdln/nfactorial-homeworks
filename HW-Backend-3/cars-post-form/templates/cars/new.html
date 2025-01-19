@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cars.com - add a car</title>
+    <style>
+        .search-button {
+            margin-top: 6px; 
+        }
+
+        div {
+            margin-bottom: 6px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <form action="/cars/new", method="post">
+        <div>
+            <label for="add-car" class="visually-hidden">Enter a car name: </label>
+            <input type="text" name="name" id="add-car" placeholder="Enter car name ...">
+        </div>
+        
+        <div>
+            <label for="add-year" class="visually-hidden">Enter a year: </label>
+            <input type="text" name="year" id="add-year" placeholder="Enter car year ...">
+        </div>
+        <button type="submit" class="search-button" aria-label="Search">Add</button> 
+    </form>
+
+</body>
+</html>

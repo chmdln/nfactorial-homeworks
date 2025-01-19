@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>cars.com</title>
+    <style>
+      .search-button {
+        margin-bottom: 10px;
+      }
+
+      li {
+        margin-bottom: 5px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <form action="/cars/search", method="get">
+        <label for="car-search" class="visually-hidden">Search for a car: </label>
+        <input type="text" name="car_name" id="car-search" placeholder="Enter car name ...">
+        <button type="submit" class="search-button" aria-label="Search">Search</button>
+    </form>
+
+    {% if cars %}
+    <ol>
+        {% for car in cars %}
+            <li>{{ car.name }} ({{ car.year }})</li>
+        {% endfor %}
+    </ol>
+    {% else %}
+        <p>No cars found matching "{{ car_name }}"</p>
+    {% endif %}
+  </body>
+</html>
