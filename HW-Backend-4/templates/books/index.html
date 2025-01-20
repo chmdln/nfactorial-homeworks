@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Кітап.kz - Список</title>
+    <style>
+        .last {
+            margin-bottom: 20px; 
+        }
+    </style>
+</head>
+
+<body>
+    <a href="/books/new">Добавить книгу</a>
+    
+    <ul>
+        {% for book in books %}
+            <li><a href="/books/{{ book.id }}">Title: {{ book.title }}</a></li>
+            <p>Author: {{ book.author }}</p>
+            <p>Year: {{ book.year }}</p>
+            <p>Total pages: {{ book.total_pages }}</p>
+            <p class="last">Genre: {{ book.genre }}</p>
+        {% endfor %}
+    </ul>
+    
+    <div>
+        {% if current_page > 1 %}
+            <button><a href="/books?page={{ current_page - 1 }}">Назад</a></button>
+        {% endif %}
+        
+        {% if current_page < total_pages %}
+            <button><a href="/books?page={{ current_page + 1 }}">Вперед</a></button>
+        {% endif %}
+    </div>
+</body>
+
+</html>
