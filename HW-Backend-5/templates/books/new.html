@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Кітап.kz - Добавить книгу</title>
+    <style>
+        div {
+            margin-bottom: 6px;
+        }
+
+        button {
+            margin-top: 6px;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="/books" method="POST">
+        <div>
+            <label>Title: 
+                <input type="text" name="title">
+            </label>
+        </div>
+        <div>
+            <label>Author: 
+                <input type="text" name="author">
+            </label>
+        </div>
+        <div>
+            <label>Year: 
+                <input type="number" name="year">
+            </label>
+        </div>
+        <div>
+            <label>Total pages: 
+                <input type="number" name="total_pages">
+            </label>
+        </div>
+        <div>
+            <label>Genre: 
+                <input type="text" name="genre">
+            </label>
+        </div>
+        
+        <button type="submit">Add</button>
+    </form>
+</body>
+</html>

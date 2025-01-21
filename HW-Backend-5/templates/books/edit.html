@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Кітап.kz - Edit book</title>
+    <style>
+        div {
+            margin-bottom: 6px;
+        }
+
+        button {
+            margin-top: 6px;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="/books/{{book.id}}/edit" method="POST">
+        <div>
+            <label>Title: 
+                <input type="text" name="title" value="{{ book.title if 'title' in book else '' }}">
+            </label>
+        </div>
+        <div>
+            <label>Author: 
+                <input type="text" name="author" value="{{ book.author if 'author' in book else '' }}">
+            </label>
+        </div>
+        <div>
+            <label>Year: 
+                <input type="number" name="year" value="{{ book.year if 'year' in book else '' }}">
+            </label>
+        </div>
+        <div>
+            <label>Total pages: 
+                <input type="number" name="total_pages" value="{{ book.total_pages if 'total_pages' in book else '' }}">
+            </label>
+        </div>
+        <div>
+            <label>Genre: 
+                <input type="text" name="genre" value="{{ book.genre if 'genre' in book else '' }}">
+            </label>
+        </div>
+        
+        <button type="submit">Update</button>
+    </form>
+</body>
+</html>
