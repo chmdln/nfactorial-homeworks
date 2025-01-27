@@ -60,7 +60,7 @@ def test_edit_book_success_has_values():
     assert "Fiction, Southern Gothic" in response.text  
 
 
-def test_edit_book_not_found():
+def test_get_book_by_id_not_found():
     response = requests.get("http://localhost:8000/books/199")
     assert response.status_code == 404
 
@@ -72,7 +72,7 @@ def test_delete_book_has_form():
     assert "1954" in response.text
     assert "1178" in response.text
     assert "Fantasy" in response.text
-    assert "Delete" in response.text 
+    assert "/delete" in response.text 
 
 
 def test_delete_book_success_redirect():
@@ -89,4 +89,5 @@ def test_delete_book_success_has_values():
     assert "1925" not in response.text
     assert "180" not in response.text
     assert "Classic" not in response.text
+
 

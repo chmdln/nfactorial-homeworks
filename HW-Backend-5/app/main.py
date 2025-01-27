@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Form, Request
+from fastapi import FastAPI, Form, Request, HTTPException
 from fastapi.responses import RedirectResponse, Response
 from fastapi.templating import Jinja2Templates
 
@@ -72,7 +72,7 @@ def get_book_by_id(request: Request, id: int):
     book = repository.get_one(id)
 
     if book is None:
-        return Response(content="Not Found", status_code=404)
+        raise HTTPException(status_code=404, detail="Not Found")
     
     return templates.TemplateResponse(
         "books/show.html", 
@@ -88,7 +88,7 @@ def edit_book_form(request: Request, id: int):
     book = repository.get_one(id)
 
     if book is None:
-        return Response(content="Not Found", status_code=404)
+        raise HTTPException(status_code=404, detail="Not Found")
     
     return templates.TemplateResponse(
         "books/edit.html", 
@@ -119,7 +119,7 @@ def edit_book(request: Request,
     response = repository.update(id, book)
 
     if response is None:
-        return Response(content="Not Found", status_code=404)
+        raise HTTPException(status_code=404, detail="Not Found")
     return RedirectResponse(url=f"/books/{id}", status_code=303)
 
 
@@ -129,7 +129,7 @@ def delete_book(request: Request, id: int):
     response = repository.delete(id)
 
     if response is None:
-        return Response(content="Not Found", status_code=404)
+        raise HTTPException(status_code=404, detail="Not Found")
     return RedirectResponse(url="/books", status_code=303) 
 
 
