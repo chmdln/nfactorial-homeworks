@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <style>
+        .item-container {
+            border: 1px solid grey;
+            padding: 10px;
+            width: 350px;
+            margin-top: 15px; 
+        }
+
+        .purchase-button {
+            margin-top: 10px;
+        }
+        .purchase-button-container {
+            display: flex; 
+            width: 350px; 
+            justify-content: center;
+        }
+        .nav-button {
+            margin-bottom: 20px; 
+        }
+        
+    </style>
+</head>
+<body>
+    <button class="nav-button" onclick="window.location.href = '/flowers'">Shop</button>
+    <button class="nav-button" onclick="window.location.href = '/profile'">View profile</button>
+    <form action="/logout" method="post" style="display: inline;">
+        <button type="submit">Logout</button>
+    </form>
+
+    <h2 class="cart-list-header">Cart items:</h2>
+    {% for flower in cart %}
+        <div class="item-container">
+            <div><strong>Id:</strong> {{ flower.id }}</div>
+            <div><strong>Name:</strong> {{ flower.name }}</div>
+            <div><strong>Cost:</strong> {{ flower.cost }}</div>
+            <div><strong>Quantity:</strong> {{ flower.quantity }}</div>
+        </div>
+    {% endfor %}
+    <h3 class="cart-total">Cart total: ${{ total_cost }}</h3>
+    
+    <form action="/purchased" method="post" style="display: inline;">
+        <div class="purchase-button-container">
+            <input type="hidden" name="purchased">
+            <button class="purchase-button" type="submit">Purchase</button>
+        </div>
+    </form>
+</html>
