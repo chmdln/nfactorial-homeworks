@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up</title>
+
+    <style>
+        p {
+            margin: 0;
+        }
+
+        input {
+            margin-top: 5px;
+        }
+
+        .profile_photo {
+            margin-top: 10px;
+        }
+
+        .submit {
+            margin-top: 15px; 
+        }
+    </style>
+</head>
+<body>
+    <form action="/upload_profile_photo" method="post" enctype="multipart/form-data">
+        <!-- <p>Email</p>
+        <input type="email" name="email" placeholder="Enter your email" required>
+        <p>Full name</p>
+        <input type="text" name="full_name" placeholder="Enter your full name" required>
+        <p>Password</p>
+        <input type="password" name="password" placeholder="Enter your password" required> -->
+        <p class="profile_photo">Profile photo (Optional)</p>
+        <input type="file" name="profile_photo" placeholder="Upload your profile photo">
+
+        <div>
+            <input class="submit" type="submit" value="Sign up">
+        </div>
+    </form>
+</body>
+</html>
