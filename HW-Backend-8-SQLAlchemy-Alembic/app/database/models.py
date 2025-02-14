@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, String, Float
+from sqlalchemy import Column, Integer, String, Float, ForeignKey
+from sqlalchemy.orm import relationship
 from .database import Base
 
 
@@ -39,3 +40,25 @@ class Purchase(Base):
 
     def __repr__(self): 
         return f"<Purchase {self.name}>"
+    
+
+
+class Cart(Base):
+    __tablename__ = "carts"
+
+    id = Column(Integer, primary_key=True, autoincrement=True, index=True)
+    user_id = Column(Integer, nullable=False, unique=True)  # One cart per user
+
+    items = relationship("CartItem", back_populates="cart", cascade="all, delete-orphan")
+
+
+class CartItem(Base):
+    __tablename__ = "cart_items"
+
+    id = Column(Integer, primary_key=True, autoincrement=True, index=True)
+    cart_id = Column(Integer, ForeignKey("carts.id", ondelete="CASCADE"), nullable=False)
+    flower_id = Column(Integer, nullable=False)
+    quantity = Column(Integer, nullable=False)
+
+    cart = relationship("Cart", back_populates="items")
+    

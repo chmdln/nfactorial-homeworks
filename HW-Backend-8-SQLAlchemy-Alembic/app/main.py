@@ -1,5 +1,5 @@
 from fastapi import (
-    Cookie, FastAPI, Form, File, 
+    FastAPI, Form, File, 
     UploadFile, Request, Response,
     templating, HTTPException, status,
     Depends
@@ -11,17 +11,17 @@ from sqlalchemy.orm import Session
 from datetime import timedelta
 from typing import Optional
 import uuid
-import json
 
 from app.auth import create_access_token, verify_access_token
 from app.database.repository.flowers import FlowersRepository, FlowerCreate, FlowerUpdate 
 from app.database.repository.purchases import PurchasesRepository
 from app.database.repository.users import UsersRepository, UserCreate 
-
-from app.utils import json_validator, verify
+from app.database.repository.carts import CartsRepository, AddToCart
+from app.database.database import get_db
+from app.utils import verify
 from . import schemas 
 from .auth import oauth2_scheme
-from app.database.database import get_db
+
 
 
 app = FastAPI()
@@ -32,6 +32,7 @@ templates = templating.Jinja2Templates("templates")
 flowers_repo = FlowersRepository()
 purchases_repo= PurchasesRepository()
 users_repo = UsersRepository()
+carts_repo = CartsRepository()
 
 
 
@@ -74,7 +75,7 @@ def user_signup(
 
 @app.post("/upload_profile_photo/{user_id}", 
           status_code=status.HTTP_201_CREATED,
-          )
+)
 def user_profile_photo(
     user_id: str,
     profile_photo: Optional[UploadFile] = File(None), 
@@ -91,8 +92,7 @@ def user_profile_photo(
         file_path = f"static/uploads/{unique_filename}"
         with open(file_path, "wb") as f:
             f.write(profile_photo.file.read())
-        user = users_repo.save_profile_photo(db, user_id, {"profile_photo": file_path})
-        print(user.profile_photo)
+        users_repo.save_profile_photo(db, user_id, {"profile_photo": file_path})
     return Response(status_code=status.HTTP_201_CREATED)
 
 
@@ -175,7 +175,6 @@ def render_flowers_form(request: Request, db: Session = Depends(get_db)):
           response_model=schemas.AddFlowerResponse
 )  
 def add_flower(
-    request: Request,
     data: schemas.AddFlowerRequest, 
     db: Session = Depends(get_db),
 ):
@@ -199,7 +198,6 @@ def add_flower(
            status_code=status.HTTP_200_OK, 
            response_model=schemas.UpdateFlowerResponse)
 def update_flower(
-    request: Request,
     flower_id: str,
     data: schemas.UpdateFlowerRequest,
     db: Session = Depends(get_db),
@@ -233,15 +231,15 @@ def delete_flower(flower_id: str, db: Session = Depends(get_db)):
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
+
 @app.post("/cart/items", status_code=status.HTTP_200_OK)
 def add_flower_to_cart(
+    user_id: str, 
     flower_id: str = Form(...),
     quantity: str = Form(default="1"),
-    cart: str = Cookie(default="[]"),
     db: Session = Depends(get_db)
 ):  
     
-    cart_json = json.loads(cart)
     quantity = int(quantity)
     flower = flowers_repo.get_flower_by_id(db, flower_id)
     
@@ -257,36 +255,39 @@ def add_flower_to_cart(
             detail="Invalid quantity."
         )
     
-    cart_json.append(
-        {
-            "flower_id": str(flower_id), 
-            "quantity": str(quantity)
-         }
+    carts_repo.add_to_cart(db, 
+        AddToCart(
+            user_id=user_id,
+            flower_id=flower_id,
+            quantity=quantity
+        ) 
     )
+    return Response(status_code=status.HTTP_200_OK)
 
-    updated_cart = json.dumps(cart_json)
-    response = Response(status_code=status.HTTP_200_OK)
-    response.set_cookie(key="cart", value=updated_cart)
-    return response
-
-
+ 
 
 @app.get("/cart/items", 
          status_code=status.HTTP_200_OK, 
-         response_model=list[schemas.AddToCartResponse]
+         response_model=schemas.AddToCartResponse
 )
 def render_cart(
-    request: Request,
-    cart: str = Cookie(default="[]"),
+    user_id: str,
     db: Session = Depends(get_db)
 ):
     
-    cart_json = json_validator(cart)
+    cart_db = carts_repo.get_cart(db, user_id)
+    if not cart_db:
+        raise HTTPException(
+            status_code=404, 
+            detail="Cart not found."
+        )
+    
     cart_items = []
+    total_cost = 0 
 
-    for cart_item in cart_json:
-        flower_id = cart_item["flower_id"]
-        quantity = int(cart_item["quantity"])
+    for cart_item in cart_db.items:
+        flower_id = cart_item.flower_id
+        quantity = int(cart_item.quantity)
 
         flower = flowers_repo.get_flower_by_id(db, flower_id)
         if flower is None: 
@@ -295,21 +296,23 @@ def render_cart(
                 detail=f"Flower with id {flower_id} not found."
             )
 
-        cart_items.append(schemas.AddToCartResponse(
+        total_cost += (flower.cost * quantity)
+        cart_items.append(schemas.AddToCartItem(
             id=flower_id,
             name=flower.name,
             cost=flower.cost,
             quantity=quantity,
-            total_cost=round(flower.cost * quantity, 2)
         ))
-    return cart_items  
+
+    return {
+        "items": cart_items, 
+        "total_cost": round(total_cost, 2)
+    }
 
 
 
 @app.post("/purchased", status_code=status.HTTP_200_OK)
 def save_user_purchase(
-    request: Request,
-    cart: str = Cookie(default="[]"),
     access_token: str = Depends(oauth2_scheme), 
     db: Session = Depends(get_db)
 ):
@@ -329,9 +332,9 @@ def save_user_purchase(
             detail="User not found."
         )
 
-    cart = json.loads(cart)
-    for cart_item in cart:
-        flower_id = cart_item["flower_id"]
+    cart = carts_repo.get_cart(db, user_id)
+    for cart_item in cart.items:
+        flower_id = cart_item.flower_id
         flower = flowers_repo.get_flower_by_id(db, flower_id)
         if flower is None: 
             raise HTTPException(
@@ -339,12 +342,8 @@ def save_user_purchase(
                 detail=f"Flower with id {flower_id} not found."
             )
         
-        cart_item.update(
-            {
-                "name": flower.name, 
-                "cost": flower.cost
-            }
-        )
+        cart_item.name = flower.name
+        cart_item.cost = flower.cost
     purchases_repo.save_purchase(db, user_id, cart)
     return Response(status_code=status.HTTP_200_OK)
 

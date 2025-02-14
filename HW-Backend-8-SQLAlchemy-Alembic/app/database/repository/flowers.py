@@ -1,4 +1,3 @@
-import uuid
 from attrs import define
 from sqlalchemy.orm import Session
 from app.database.models import Flower

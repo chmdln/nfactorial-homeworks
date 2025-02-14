@@ -14,14 +14,14 @@ class PurchaseCreate:
 
 class PurchasesRepository:
     def save_purchase(self, db: Session, user_id: int, cart: list[PurchaseCreate]) -> None:
-        for cart_item in cart: 
+        for cart_item in cart.items: 
 
             purchase = Purchase(
                 user_id=user_id, 
-                flower_id=cart_item["flower_id"],
-                name = cart_item["name"],
-                cost=cart_item["cost"],
-                quantity=cart_item["quantity"]
+                flower_id=cart_item.flower_id,
+                name = cart_item.name,
+                cost=cart_item.cost,
+                quantity=cart_item.quantity
             )
 
             db.add(purchase)

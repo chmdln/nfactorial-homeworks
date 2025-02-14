@@ -1,8 +1,8 @@
 """Create flowers table
 
-Revision ID: 045788569921
-Revises: 678217a234a8
-Create Date: 2025-02-14 20:44:54.152923
+Revision ID: 9c2fd22491cc
+Revises: 3c6d5f72eb0f
+Create Date: 2025-02-15 00:29:44.393872
 
 """
 from typing import Sequence, Union
@@ -12,8 +12,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '045788569921'
-down_revision: Union[str, None] = '678217a234a8'
+revision: str = '9c2fd22491cc'
+down_revision: Union[str, None] = '3c6d5f72eb0f'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 

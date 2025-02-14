@@ -52,9 +52,6 @@ class UsersRepository:
             return user
         return None
     
-    # def generate_id(self) -> uuid.UUID:
-    #     id = uuid.uuid4()
-    #     return id
 
 
 

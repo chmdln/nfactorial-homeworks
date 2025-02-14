@@ -1,6 +1,6 @@
 from pydantic import BaseModel, EmailStr, field_validator
+from typing import List 
 import re 
-import uuid 
 
 
 class UserSignupRequest(BaseModel):
@@ -66,11 +66,17 @@ class UpdateFlowerResponse(BaseModel):
         from_attributes = True
 
 
-class AddToCartResponse(BaseModel):
+class AddToCartItem(BaseModel):
     id: int 
     name: str
     cost: float
     quantity: int
+    class Config:
+        from_attributes = True
+
+
+class AddToCartResponse(BaseModel):
+    items: List[AddToCartItem]
     total_cost: float
 
     class Config:
