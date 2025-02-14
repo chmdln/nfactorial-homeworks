@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List of flowers</title>
+    <style>
+        p {
+            margin: 0;
+        }
+        input {
+            margin-top: 5px;
+        }
+        .add-flower {
+            margin-top: 15px;
+        }
+        .flower-list-header {
+            margin-top: 30px;
+        }
+        .flower-container {
+            border: 1px solid grey;
+            padding: 10px;
+            width: 250px;
+            margin-top: 15px; 
+        }
+        .flower-details {
+            font-weight: bold;
+        }
+        .add-to-cart {
+            margin-top: 15px;
+        }
+        .view-cart-button {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h2> Add flower </h2>
+    <form action="/flowers" method="post">
+        <p>Name</p>
+        <input type="text" name="name" placeholder="Enter flower name">
+        <p>Cost</p>
+        <input type="number" name="cost" step="0.01" min="0.01" placeholder="Enter flower cost">
+        <p>Count</p>
+        <input type="number" name="count" min="1" placeholder="Enter flower count">
+        <div>
+            <input class="add-flower" type="submit" value="Add">
+        </div>
+    </form>
+
+    <h2 class="flower-list-header">List of Flowers</h2>
+    {% for flower in flowers %}
+        <div class="flower-container">
+            <div><strong>Name:</strong> {{ flower.name }}</div>
+            <div><strong>Cost:</strong> ${{ flower.cost }}</div>
+            <div><strong>Count:</strong> {{ flower.count }}</div>
+            <form action="/cart/items" method="post" style="display: inline;">
+                <input type="number" name="quantity" min="1" placeholder="Enter quantity">
+                <input type="hidden" name="flower_id" value="{{ flower.id }}">
+                <button class="add-to-cart" type="submit">Add to Cart</button>
+            </form>
+        </div>
+    {% endfor %}
+    <button class="view-cart-button" onclick="window.location.href='/cart/items/'">View Cart</button>
+    <button onclick="window.location.href = '/profile'">View profile</button>
+    <form action="/logout" method="post" style="display: inline;">
+        <button type="submit">Logout</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .item-container {
+            border: 1px solid grey;
+            padding: 10px;
+            width: 350px;
+            margin-top: 15px; 
+        }
+        .nav-button{
+            margin-top: 20px; 
+        }
+    </style>
+</head>
+<body>
+    <h2 class="items-list-header">Items bought:</h2>
+    {% for flower in purchases %}
+        <div class="item-container">
+            <div><strong>Name:</strong> {{ flower.name }}</div>
+            <div><strong>Cost:</strong> ${{ flower.cost }}</div>
+            <div><strong>Quantity:</strong> {{ flower.quantity }}</div>
+        </div>
+    {% endfor %}
+
+    <button class="nav-button" onclick="window.location.href = '/flowers'">Shop</button>
+    <button class="nav-button" onclick="window.location.href = '/cart/items'">View cart</button>
+    <button class="nav-button" onclick="window.location.href = '/profile'">View profile</button>
+    <form action="/logout" method="post" style="display: inline;">
+        <button type="submit">Logout</button>
+    </form>
+</body>
+</html>
