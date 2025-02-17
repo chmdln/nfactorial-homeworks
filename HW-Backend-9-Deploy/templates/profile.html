@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        img {
+            width: 150px;
+            height: 150px;
+            object-fit: fill; 
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <h1>User's profile</h1>
+
+    <div>
+        {% if user.profile_photo %}
+            <img src="{{ user.profile_photo }}" alt="User's profile photo">
+        {% endif %}
+    </div>
+    <p>User id: {{ user.id }}</p>
+    <p>Full name: {{ user.full_name }}</p>
+    <p>Email: {{ user.email }}</p>
+
+    <button onclick="window.location.href = '/flowers'">Shop</button>
+    <button onclick="window.location.href = '/cart/items'">View cart</button>
+    <form action="/logout" method="post" style="display: inline;">
+        <button type="submit">Logout</button>
+    </form>
+</body>
+</html>
