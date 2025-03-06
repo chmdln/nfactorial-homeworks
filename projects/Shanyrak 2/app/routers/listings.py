@@ -21,8 +21,8 @@ router = APIRouter(tags=["Listings"])
 
 @router.post("/shanyraks", status_code=status.HTTP_200_OK, response_model=ListingPostResponse)
 def create_listing(
+    listing: ListingPostRequest,
     db: Session = Depends(get_db), 
-    listing: ListingPostRequest = Depends(), 
     user: User = Depends(get_current_user)
 ):
 
@@ -53,8 +53,8 @@ def get_listings(
 @router.patch("/shanyraks/{id}", status_code=status.HTTP_200_OK, response_class=Response)
 def update_listing(
     id: int, 
+    listing: ListingUpdateRequest,
     user: User = Depends(get_current_user),
-    listing: ListingUpdateRequest = Depends(),
     db: Session = Depends(get_db)
 ):    
     existing_listing = db.query(Listing).filter(Listing.id == id).first()
