@@ -112,8 +112,8 @@ def delete_listing(
 @router.post("/shanyraks/{id}/comments", status_code=status.HTTP_200_OK, response_class=Response)
 def create_comment(
     id: int, 
-    comment: CommentPostRequest, 
     user: User = Depends(get_current_user),
+    comment: CommentPostRequest = Depends(),
     db: Session = Depends(get_db)
 ):
     existing_listing = db.query(Listing).filter(Listing.id == id).first()
