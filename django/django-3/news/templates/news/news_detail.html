@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News details</title>
+</head>
+<body>
+    <h1>Title: {{ news.title }}</h1>
+    <p>{{ news.content }}</p>
+    <p>{{ news.created_at }}</p>
+
+    <p style="font-weight: bold">Comments: </p>
+
+    {% for comment in comments %}
+        <div style="margin-bottom: 10px">{{ comment.created_at }}: {{ comment.content }}</div>
+    {% endfor %}
+
+    <!-- form to add a comment -->
+    <form action="{% url 'news:news_detail' news.id %}" method="POST">
+        {% csrf_token %}
+        <p style="font-weight: bold">Add a comment: </p>
+        {{ comment_form.as_p }}
+        <button type="submit">Add</button>
+    </form>
+</body>
+</html>
