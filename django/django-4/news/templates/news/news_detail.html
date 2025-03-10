@@ -1,0 +1,22 @@
+{% extends "news/base.html" %}
+
+{% block title %} News details {% endblock %}
+{% block header %} <h1>Title: {{ news.title }}</h1> {% endblock %}
+{% block content %} 
+    <p>{{ news.content }}</p>
+    <p>{{ news.created_at }}</p>
+
+    <p style="font-weight: bold">Comments: </p>
+
+    {% for comment in comments %}
+        <div style="margin-bottom: 10px">{{ comment.created_at }}: {{ comment.content }}</div>
+    {% endfor %}
+ 
+    <form action="{% url 'news:news_detail' news.id %}" method="POST">
+        {% csrf_token %}
+        <p style="font-weight: bold">Add a comment: </p>
+        {{ comment_form.as_p }}
+        <button type="submit">Add</button>
+    </form>
+{% endblock %}
+

@@ -1,0 +1,12 @@
+{% extends "news/base.html" %}
+
+{% block title %} All news {% endblock %}
+{% block header %} <h1>All news </h1> {% endblock %}
+{% block content %} 
+    <ul>
+        {% for news_item in news_list %}
+            <li><a href="{% url 'news:news_detail' news_item.id %}">{{ news_item.title }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+

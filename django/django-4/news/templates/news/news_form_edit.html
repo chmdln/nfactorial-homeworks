@@ -1,0 +1,13 @@
+{% extends "news/base.html" %}
+
+{% block title %} News form {% endblock %}
+{% block header %} <h1>Edit news form </h1> {% endblock %}
+{% block content %} 
+    <form action="{% url 'news:news_edit' news.id %}" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Update</button>
+    </form>
+{% endblock %}
+
+
