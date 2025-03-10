@@ -38,25 +38,6 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     return encoded_jwt
 
 
-
-def verify_access_token(token: str) -> dict: 
-    try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        username: str = payload.get("sub")
-        if username is None:
-            raise credentials_exception
-        
-        if "exp" in payload:
-            expiration_time = payload["exp"]
-            if expiration_time < time.time():
-                raise credentials_exception
-
-    except jwt.InvalidTokenError:
-        raise credentials_exception
-    return payload 
-
-
-
 def verify_access_token(token: str) -> dict: 
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])  # 
