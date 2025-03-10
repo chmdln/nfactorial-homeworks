@@ -11,11 +11,20 @@
     {% for comment in comments %}
         <div style="margin-bottom: 10px">{{ comment.created_at }}: {{ comment.content }}</div>
     {% endfor %}
+
+    {% if form.errors %}
+        <ul>
+            {% for error in form.errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
  
     <form action="{% url 'news:news_detail' news.id %}" method="POST">
         {% csrf_token %}
         <p style="font-weight: bold">Add a comment: </p>
-        {{ comment_form.as_p }}
+        {{ comment_form }}
         <button type="submit">Add</button>
     </form>
 {% endblock %}

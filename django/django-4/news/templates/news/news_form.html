@@ -3,9 +3,18 @@
 {% block title %} News form {% endblock %}
 {% block header %} <h1>News form </h1> {% endblock %}
 {% block content %} 
+
+    {% if form.errors %}
+    <ul>
+        {% for error in form.errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
     <form action="{% url 'news:news_form' %}" method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form }}
         <button type="submit">Add</button>
     </form>
 {% endblock %}
