@@ -1,0 +1,54 @@
+{% extends "news/base.html" %}
+
+{% block title %} News details {% endblock %}
+{% block header %} <h1>Title: {{ news.title }}</h1> {% endblock %}
+{% block content %} 
+    <p>{{ news.content }}</p>
+    <p>{{ news.created_at }}</p>
+
+    <p style="font-weight: bold">Comments: </p>
+
+    {% for comment in comments %}
+        <div style="border: 1px solid grey; padding: 10px; width: 40%">
+            <div style="display: flex; margin-bottom: 10px; font-weight: bold">
+                <div style="margin-right: 10px">@{{ comment.author }}</div>
+                <div>{{ comment.created_at }}</div>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+                <div>
+                    {{ comment.content }}
+                </div>
+                {% if comment.author.username == request.user.username or perms.news.delete_comment %}
+                    <form action="{% url 'news:comment_delete' comment.news.id comment.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" value="Delete" style="padding: 5px; width: 100px; border-radius: 5px; border: none; background-color: red; color: white; cursor: pointer">
+                            Delete
+                        </button>
+                    </form>
+                {% endif %}
+            </div>
+            
+        </div>
+        
+    {% endfor %}
+
+    <p style="font-weight: bold">Add a comment: </p>
+    {% if comment_form %}
+        {% if comment_form.errors %}
+            <ul>
+                {% for error in comment_form.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <form action="{% url 'news:news_detail' news.id %}" method="POST">
+            {% csrf_token %}
+            {{ comment_form }}
+            <button type="submit">Add</button>
+        </form>
+    {% else %}
+        <p>Доступно для авторизованных</p>
+    {% endif %}
+{% endblock %}
+
