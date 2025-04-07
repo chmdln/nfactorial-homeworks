@@ -1,17 +1,12 @@
-# Use official Python image
-FROM python:3
-
-# Set the working directory
 WORKDIR /app
 
-# Copy dependencies first
+COPY ./backend/app ./app
 COPY requirements.txt .
+COPY alembic.ini .
+COPY alembic ./alembic
 
-# Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the entire project
-COPY . .
+ENV PYTHONPATH=/app
 
-# Run migrations before app startup 
 CMD ["sh", "-c", "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000"]

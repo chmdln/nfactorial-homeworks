@@ -6,8 +6,8 @@ from sqlalchemy import pool
 from alembic import context
 
 
-from backend.app.database.database import Base
-from backend.app.database.models import (
+from app.database.database import Base
+from app.database.models import (
     User, EmailVerificationCode, PasswordForgotCode,
     Post, Like, Comment, Connection, ConnectionStatus, 
     Conversation, Message
