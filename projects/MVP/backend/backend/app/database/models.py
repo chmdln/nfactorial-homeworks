@@ -4,8 +4,7 @@ from datetime import datetime, timezone
 import enum
 import uuid
 
-from app.database.database import Base  
-
+from database.database import Base  
 
 class User(Base):
     __tablename__ = "users"
