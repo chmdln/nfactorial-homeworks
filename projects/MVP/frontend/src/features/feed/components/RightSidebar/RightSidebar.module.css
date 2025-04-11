@@ -1,0 +1,44 @@
+.root {
+    background-color: white;
+    border-radius: 0.3rem;
+    border: 1px solid #e0e0e0;
+    padding: 1rem;
+}
+  
+.root h3 {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.root .items {
+  display: grid;
+  gap: 1rem;
+}
+
+.root .item {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.8rem;
+}
+
+.root .item button {
+  flex-shrink: 0;
+  text-align: left;
+}
+
+.root .item .avatar {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.root .item .name {
+  font-weight: bold;
+}
+
+.root .item .button {
+  width: auto;
+  margin: 0.3rem 0 0;
+}
+  

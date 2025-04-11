@@ -1,0 +1,53 @@
+.root .toggle {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border-right: 1px solid #e0e0e0;
+    padding-right: 1rem;
+  }
+  
+.root .toggle .avatar {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+}
+
+.root .menu {
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  padding: 1rem;
+  border-radius: 0.3rem 0 0.3rem 0.3rem;
+  position: absolute;
+  top: 5rem;
+  right: 1rem;
+  width: min(18rem, 100%);
+}
+
+.root .menu .name {
+  font-weight: bold;
+  white-space: nowrap;
+}
+  
+.root .menu .content {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: 3rem 1fr;
+  align-items: center;
+}
+
+.root .menu .avatar {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.root .menu .links {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.root .menu .button {
+  margin-bottom: 0;
+}
+  

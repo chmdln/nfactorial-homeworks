@@ -1,0 +1,17 @@
+.root .inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  
+  .root .buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+  }
+  
+  .root .error {
+    color: red;
+    font-size: 0.9rem;
+  }
+  
